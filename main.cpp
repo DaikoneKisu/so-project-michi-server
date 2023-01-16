@@ -9,7 +9,6 @@
 #include <boost/uuid/random_generator.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
-#include "javascript interpreter/javascript_interpreter.h"
 #include "http/server.hpp"
 
 using namespace std::string_literals;
@@ -52,6 +51,7 @@ int main(int argc, char* argv[]) {
                 send_response();
 
                 code_output.close();
+                std::system(("del /f "s + executable_filename + " "s + code_to_compile_filename + " "s + code_output_filename).data());
             }
         )
         .on(http::Verb::post, "/js",
@@ -77,6 +77,7 @@ int main(int argc, char* argv[]) {
                 send_response();
 
                 code_output.close();
+                std::system(("del /f "s + code_to_interpret_filename + " "s + code_output_filename).data());
             }
         )
         .async_start(argv[1], std::stoi(argv[2]));
