@@ -67,7 +67,7 @@ public:
     {}
 
     void async_start() {
-        boost::asio::post(
+        boost::asio::post(_server_socket.socket().get_executor(),
             [&] {
                 std::cout << "Session started - client located at " << _server_socket.socket().remote_endpoint() << '\n';
                 while (true) {
